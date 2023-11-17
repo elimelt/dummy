@@ -71,7 +71,7 @@ def parse_openapi_paths(paths_data):
         path = path_data.get('path', '')
         data = path_data.get('data', {})
         operation = parse_openapi_operation(data)
-        paths.append(OpenAPIPath(path, '', operation))  # Modify as needed
+        paths.append(OpenAPIPath(path, '', operation))
 
     return paths
 
@@ -97,15 +97,13 @@ def parse_openapi_json(json_dict):
     info = parse_openapi_info(json_dict.get('info', {}))
     servers = parse_openapi_servers(json_dict.get('servers', []))
 
-    # Extract paths as a dictionary
     paths_data = json_dict.get('paths', {})
 
-    # Convert the dictionary to a list of dictionaries
+
     paths = parse_openapi_paths([{"path": path, "data": data} for path, data in paths_data.items()])
 
     components = parse_openapi_components(json_dict.get('components', {}))
     return OpenAPI(openapi, info, servers, paths, components)
-
 
 def main():
     json_dict = read_yaml_to_json('example.yaml')
